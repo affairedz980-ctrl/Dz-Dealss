@@ -72,7 +72,8 @@ export const modifierAnnonce = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, prix, description, categorie } = req.body;
-    console.log(prix);
+    console.log("req.body:", req.body);
+
     let images = req.body.images || [];
 
     // Vérification de l'ID MongoDB valide
@@ -90,12 +91,6 @@ export const modifierAnnonce = async (req, res) => {
       return res.status(400).json({ message: "Le prix doit être un nombre." });
     }
 
-    // Gestion des images uploadées via multer
-    if (req.files && req.files.length > 0) {
-      const uploadedImages = req.files.map((file) => file.path); // Récupère les chemins des images uploadées
-      images = [...images, ...uploadedImages]; // Ajoute les nouvelles images aux anciennes (si existantes)
-    }
-
     // Vérifier si le post existe avant de le modifier
     const post = await Post.findById(id);
     if (!post) {
@@ -104,12 +99,17 @@ export const modifierAnnonce = async (req, res) => {
         .json({ message: "Aucun post trouvé avec cet ID." });
     }
 
+    // Gestion des images uploadées via multer
+    if (req.files && req.files.length > 0) {
+      const uploadedImages = req.files.map((file) => file.path);
+      post.picturePaths = uploadedImages;
+    }
+
     // Mise à jour du post
     post.title = title;
     post.prix = prix;
     post.description = description;
     post.categorie = categorie;
-    post.images = images.length > 0 ? images : post.images; // Ne pas écraser les images existantes si aucune nouvelle image n'est envoyée
 
     await post.save(); // Enregistre les modifications
 

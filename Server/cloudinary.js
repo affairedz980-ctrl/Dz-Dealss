@@ -18,7 +18,9 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "uploads", // The folder in Cloudinary to store files
     allowed_formats: ["jpg", "png", "jpeg", "gif"], // Allowed file formats
-    transformation: [{ width: 500, height: 500, crop: "limit" }], // Optional transformations
+    transformation: [
+      { width: 1920, height: 1080, crop: "limit", quality: "auto:best" }, // Transformation de l'image
+    ],
   },
 });
 

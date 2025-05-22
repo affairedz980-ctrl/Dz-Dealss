@@ -134,7 +134,7 @@ app.post(
 );
 app.post("/auth/regester", upload.single("picture"), asyncHandler(register));
 app.post("/auth/login", asyncHandler(login));
-app.use("/post", Posts);
+app.use("/post", upload.array("pictures", 3), Posts);
 // Database Connection
 mongoose
   .connect(MONGO_URL)

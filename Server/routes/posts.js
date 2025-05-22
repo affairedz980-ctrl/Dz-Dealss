@@ -16,10 +16,10 @@ const router = express.Router();
 
 router.get("/", verifyToken, getAllPosts);
 router.patch("/comments/:id", verifyToken, Commentaires);
-router.get("/getcomments/:id", verifyToken, getComment);
-router.patch("/rating/:id", verifyToken, Rating);
-router.patch("/getrating/:id", verifyToken, getRating);
-router.get("/getposts/:id", verifyToken, getPosts);
+router.get("/getcomments/:id", getComment);
+router.patch("/rating/:id", Rating);
+router.patch("/getrating/:id", getRating);
+router.get("/getposts/:id", getPosts);
 router.get("/getuserposts/:userId", verifyToken, getUserPosts);
 router.delete("/deletepost/:id", verifyToken, deletePosts);
 router.patch("/modifierAnnonce/:id", verifyToken, modifierAnnonce);

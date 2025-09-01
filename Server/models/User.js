@@ -16,6 +16,22 @@ const UserSchema = new mongoose.Schema({
 
     min: 5,
   },
+  date: { type: Date, default: Date.now },
+  followers: {
+    type: Array,
+    default: [],
+  },
+  rating: {
+    type: Array,
+    default: [],
+  },
+  commentaire: {
+    type: Array,
+    default: [],
+  },
+
+  adresse: String,
+  infos: String,
   profession: String,
   telephone: String,
   picturePath: String,

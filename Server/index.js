@@ -17,6 +17,14 @@ import Posts from "./routes/posts.js";
 import Conversation from "./models/Messages.js";
 import emailjs from "@emailjs/nodejs";
 
+const PING_URL = "https://dz-deals-2.onrender.com"; // Votre backend Render
+
+setInterval(() => {
+  fetch(PING_URL)
+    .then((res) => console.log("Ping successful"))
+    .catch((err) => console.error("Ping failed:", err));
+}, 600000); // Toutes les 10 minutes (600000ms)
+
 // Utility: Wrap async handlers
 const asyncHandler = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);

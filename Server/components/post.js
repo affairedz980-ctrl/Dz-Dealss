@@ -428,17 +428,20 @@ export const getSelleerCommands = async (req, res) => {
 export const Commentaires = async (req, res) => {
   try {
     const { id } = req.params; // Récupération de l'identifiant du post
-    const { userId, comment } = req.body; // Extraction des données envoyées dans le corps de la requête
+    const { userId, comment, nom, picture } = req.body; // Extraction des données envoyées dans le corps de la requête
 
     // Recherche du post correspondant
     const post = await Post.findById(id); // Assurez-vous que `id` correspond bien à l'ID MongoDB
-
+    const user = await User.findById(userId);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
     // Ajout du commentaire
     post.commentaire.push({
+      commentId: new mongoose.Types.ObjectId().toString(),
+      nom,
+      picture,
       comment,
       userId,
       date: new Date().toISOString().split("T")[0],

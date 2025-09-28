@@ -44,7 +44,7 @@ router.patch("/rating/:id", Rating);
 router.patch("/getrating/:id", getRating);
 router.get("/getposts/:id", getPosts);
 router.get("/getsellercommands/:userId", getSelleerCommands);
-router.get("/getuserposts/:userId", verifyToken, getUserPosts);
+router.get("/getuserposts/:userId", getUserPosts);
 router.delete("/deletepost/:id", verifyToken, deletePosts);
 router.patch("/modifierAnnonce/:id", verifyToken, modifierAnnonce);
 router.patch("/rating", Rating2);

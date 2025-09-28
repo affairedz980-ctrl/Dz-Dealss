@@ -146,20 +146,31 @@ export const abonnées = async (req, res) => {
   try {
     const { userId, targetId } = req.body;
 
-    // Vérifie que les deux IDs sont présents
-    if (!userId || !targetId) {
-      return res.status(400).json({ message: "Champs manquants." });
+    // Vérifie que targetId est présent (obligatoire)
+    if (!targetId) {
+      return res.status(400).json({ message: "TargetId manquant." });
     }
 
-    // Récupère l'utilisateur qui va s'abonner et la cible
-    const user = await User.findById(userId);
+    // Récupère la cible
     const targetUser = await User.findById(targetId);
 
-    if (!user || !targetUser) {
+    if (!targetUser) {
+      return res.status(404).json({ message: "Utilisateur cible non trouvé." });
+    }
+
+    // ✅ Cas 1 : user non connecté → on retourne juste le nombre d'abonnés
+    if (!userId) {
+      return res.status(200).json({
+        followersCount: targetUser.followers.length,
+      });
+    }
+
+    // ✅ Cas 2 : user connecté → on gère abonnement/désabonnement
+    const user = await User.findById(userId);
+    if (!user) {
       return res.status(404).json({ message: "Utilisateur non trouvé." });
     }
 
-    // Abonnement ou désabonnement
     const isAlreadySubscribed = targetUser.followers.includes(userId);
 
     if (isAlreadySubscribed) {
@@ -179,6 +190,7 @@ export const abonnées = async (req, res) => {
         ? "Désabonné avec succès."
         : "Abonné avec succès.",
       followers: targetUser.followers,
+      followersCount: targetUser.followers.length,
     });
   } catch (error) {
     console.error("Erreur:", error);
@@ -275,7 +287,7 @@ export const Rating2 = async (req, res) => {
 
 export const Commentaires2 = async (req, res) => {
   try {
-    const { userId, comment, id, nom } = req.body; // Extraction des données envoyées dans le corps de la requête
+    const { userId, comment, id, nom, picture } = req.body; // Extraction des données envoyées dans le corps de la requête
 
     // Recherche du post correspondant
     const user = await User.findById(id); // Assurez-vous que `id` correspond bien à l'ID MongoDB
@@ -288,7 +300,7 @@ export const Commentaires2 = async (req, res) => {
     user.commentaire.push({
       commentId: new mongoose.Types.ObjectId().toString(),
       nom,
-      picture: user.picture,
+      picture,
       comment,
       userId,
       date: new Date().toISOString().split("T")[0],

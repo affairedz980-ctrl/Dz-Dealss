@@ -287,7 +287,7 @@ export const Rating2 = async (req, res) => {
 
 export const Commentaires2 = async (req, res) => {
   try {
-    const { userId, comment, id, nom, picture } = req.body; // Extraction des données envoyées dans le corps de la requête
+    const { userId, comment, id, nom } = req.body; // Extraction des données envoyées dans le corps de la requête
 
     // Recherche du post correspondant
     const user = await User.findById(id); // Assurez-vous que `id` correspond bien à l'ID MongoDB
@@ -300,7 +300,7 @@ export const Commentaires2 = async (req, res) => {
     user.commentaire.push({
       commentId: new mongoose.Types.ObjectId().toString(),
       nom,
-      picture,
+      picture: user.picture,
       comment,
       userId,
       date: new Date().toISOString().split("T")[0],

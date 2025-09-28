@@ -328,6 +328,26 @@ export const getUserPosts = async (req, res) => {
   }
 };
 
+export const deleteComment = async (req, res) => {
+  try {
+    const { commentId, id } = req.params;
+    const post = await Post.findById(id);
+
+    post.commentaire = post.commentaire.filter(
+      (r) => r.commentId !== commentId
+    );
+
+    post.save();
+
+    res.status(200).json(post.commentaire);
+  } catch (error) {
+    console.error("Error deleting comment:", error.message);
+    res
+      .status(500)
+      .json({ message: "Failed to delete comment", error: error.message });
+  }
+};
+
 export const getCommands = async (req, res) => {
   try {
     const { userId } = req.params;

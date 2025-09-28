@@ -13,6 +13,7 @@ import {
   getAllUsers,
   getCommands,
   getSelleerCommands,
+  deleteComment,
 } from "../components/post.js";
 import express from "express";
 import { verifyToken } from "../meadelwear/token.js";
@@ -50,7 +51,8 @@ router.patch("/modifierAnnonce/:id", verifyToken, modifierAnnonce);
 router.patch("/rating", Rating2);
 router.patch("/getrating", getRating2);
 router.get("/getabonees/:id/:userid", getabonnées);
-router.delete("/deleteusercomment/:id", deleteComment2);
+router.delete("/deleteusercomment/:commentId/:id", deleteComment2);
+router.delete("deletepostcomment/:commentId/:id", deleteComment);
 router.patch("/views/:id", addView);
 router.get("/users", getAllUsers);
 router.patch("/motdepasse", updatePassword);

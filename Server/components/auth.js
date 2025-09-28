@@ -336,7 +336,7 @@ export const getComment2 = async (req, res) => {
 
 export const deleteComment2 = async (req, res) => {
   try {
-    const { id, commentId } = req.params;
+    const { commentId, id } = req.params;
     const user = await User.findById(id);
 
     user.commentaire = user.commentaire.filter(

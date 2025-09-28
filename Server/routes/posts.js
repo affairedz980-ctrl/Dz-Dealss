@@ -52,7 +52,7 @@ router.patch("/rating", Rating2);
 router.patch("/getrating", getRating2);
 router.get("/getabonees/:id/:userid", getabonnées);
 router.delete("/deleteusercomment/:commentId/:id", deleteComment2);
-router.delete("deletepostcomment/:commentId/:id", deleteComment);
+router.delete("/deletepostcomment/:commentId/:id", deleteComment);
 router.patch("/views/:id", addView);
 router.get("/users", getAllUsers);
 router.patch("/motdepasse", updatePassword);

@@ -346,12 +346,10 @@ export const deleteComment = async (req, res) => {
     res.status(200).json(post.commentaire);
   } catch (error) {
     console.error("Error deleting comment:", error.message);
-    res
-      .status(500)
-      .json({
-        message: "Échec de suppression du commentaire",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Échec de suppression du commentaire",
+      error: error.message,
+    });
   }
 };
 
@@ -468,7 +466,7 @@ export const Commentaires = async (req, res) => {
     post.commentaire.push({
       commentId: new mongoose.Types.ObjectId().toString(),
       nom,
-      picture: user.picture,
+      picture: user?.picture,
       comment,
       userId,
       date: new Date().toISOString().split("T")[0],
